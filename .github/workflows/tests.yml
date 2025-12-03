@@ -23,7 +23,7 @@ jobs:
         run: uv sync --locked --all-extras --dev
       
       - name: Run Tests
-        run: uv run pytest -m tests
+        run: uv run pytest -m
 
       - name: Run Ruff
         run: ruff check --output-format=github
