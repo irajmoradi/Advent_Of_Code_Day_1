@@ -1,7 +1,4 @@
 import argparse
-parser = argparse.ArgumentParser()
-parser.add_argument('--instructions', required=True, nargs="*")
-args = parser.parse_args()
 
 
 def find_combo(instruct: list[str]) -> int:
@@ -16,7 +13,26 @@ def find_combo(instruct: list[str]) -> int:
         int: number of times the number 0 is passed on the dial during the following of the instructions
     """
     retval = 0
-
+    currentpos = 50
+    for ins in instruct:
+        print("instruction is ", ins)
+        print("Current position is ", currentpos)
+        print("Retval is ", retval)
+        if ins[0] == "L":
+            direction = -1
+        else:
+            direction = 1
+        # for L38 shift should be -38, and for R38 shift should be 38
+        shift = direction * int(ins[1:])
+        intpos = currentpos + shift
+        while intpos > 99 or intpos < 0:
+            if intpos < 0:
+                intpos = 100 + intpos
+            if intpos > 99:
+                intpos = intpos - 100
+        currentpos = intpos
+        if currentpos == 0:
+            retval += 1
     return retval
 
 
@@ -28,4 +44,8 @@ def main():
 
 
 if __name__ == "__main__":
+    
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--instructions', required=True, nargs="*")
+    args = parser.parse_args()
     main()
