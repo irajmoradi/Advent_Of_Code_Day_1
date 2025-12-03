@@ -1,0 +1,29 @@
+name: tests
+on:
+  push:
+    branches: ['*']
+  pull_request:
+    branches: ['*']
+jobs:
+  tests:
+    strategy:
+      matrix:
+        python: [3.7, 3.8, 3.9]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
+
+      - name: Set up Python
+        run: uv python install
+
+      - name: Install Project
+        run: uv sync --locked --all-extras --dev
+      
+      - name: Run Tests
+        run: uv run pytest -m tests
+
+      - name: Run Ruff
+        run: ruff check --output-format=github
