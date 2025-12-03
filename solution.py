@@ -1,3 +1,9 @@
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument('--instructions', required=True, nargs="*")
+args = parser.parse_args()
+
+
 def find_combo(instruct: list[str]) -> int:
     """
     Calculates the number of zero's we pass on a 99 dial combination lock.
@@ -15,7 +21,10 @@ def find_combo(instruct: list[str]) -> int:
 
 
 def main():
-    print("Hello from day1!")
+    instruct = args.instructions
+    print(f"Your instructions are: {instruct}")
+    num_zero = find_combo(instruct)
+    print(f"The number of zeroes your instructions make the dial pass is {num_zero}")
 
 
 if __name__ == "__main__":
